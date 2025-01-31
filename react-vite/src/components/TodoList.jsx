@@ -32,6 +32,21 @@ const TodoList = () => {
     setTodoText(e.target.value);
   };
 
+  const handleToggleCompleted = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        const newTodo = {
+          ...todo,
+          completed: !todo.completed,
+        };
+        return newTodo;
+      } else {
+        return todo;
+      }
+    });
+    setTodos(updatedTodos);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -44,8 +59,13 @@ const TodoList = () => {
         <button type="submit">Add Todo</button>
       </form>
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
+        {todos.map(({ id, text, completed }) => (
+          <li key={id}>
+            <p>{text}</p>
+            <button onClick={() => handleToggleCompleted(id)}>
+              {completed ? "취소하기" : "완료하기"}
+            </button>
+          </li>
         ))}
       </ul>
     </div>
