@@ -1,11 +1,11 @@
 import React from "react";
-import TodoList from "./components/TodoList";
+import TodoContainer from "./components/todo/TodoContainer";
 import "./App.css";
 
 const App = () => {
   return (
     <main className="main-center">
-      <TodoList />
+      <TodoContainer />
     </main>
   );
 };
