@@ -3,6 +3,8 @@ import { useState } from "react";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import TodoDashboard from "./TodoDashboard";
+import TodoContainer from './TodoContainer';
+import styled from "styled-components";
 
 const SAMPLE_TODOS = [
   { id: 1, text: "Buy milk", completed: false },
@@ -60,7 +62,7 @@ const TodoContainer = () => {
     setTodos(filteredTodos);
   };
   return (
-    <div>
+    <TodoContainerWrapper>
       <TodoDashboard />
       <TodoForm
         handleSubmit={handleSubmit}
@@ -72,8 +74,13 @@ const TodoContainer = () => {
         handleToggleCompleted={handleToggleCompleted}
         handleDelete={handleDelete}
       />
-    </div>
+    </TodoContainerWrapper>
   );
 };
 
+const TodoContainerWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`
 export default TodoContainer;
