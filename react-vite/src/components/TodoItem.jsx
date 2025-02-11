@@ -1,13 +1,13 @@
-import React from "react";
+import { useContext } from "react";
 import styled from "styled-components";
+import { TodoContext } from "../context/TodoContext";
 
 const TodoItem = ({
   completed,
   text,
-  id,
-  handleToggleCompleted,
-  handleDelete,
+  id
 }) => {
+  const {handleToggleCompleted, handleDelete} = useContext(TodoContext);
   return (
     <TodoItemWrapper>
       <TodoItemText $completed={completed}>{text}</TodoItemText>
@@ -34,8 +34,7 @@ const TodoItemWrapper = styled.li`
 `;
 
 const TodoItemText = styled.p`
-  text-decoration: ${({ $completed }) =
-    $completed ? "line-through" : "none"};
+  text-decoration: ${({ $completed }) => ($completed ? "line-through" : "none")};
 `;
 
 const TodoItemActions = styled.div`

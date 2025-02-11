@@ -1,16 +1,14 @@
-import React from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { ActionButton } from "./TodoItem";
+import { TodoContext } from "../context/TodoContext";
 
-const TodoForm = ({ handleSubmit, todoText, handleInputChange }) => {
+const TodoForm = () => {
+  const { handleSubmit } = useContext(TodoContext);
+
   return (
     <TodoFormWrapper onSubmit={handleSubmit}>
-      <TodoFormInput
-        type="text"
-        value={todoText}
-        onChange={handleInputChange}
-        placeholder="Enter a new todo"
-      />
+      <TodoFormInput placeholder="Enter a new todo" />
       <SubmitButton type="submit">Add Todo</SubmitButton>
     </TodoFormWrapper>
   );

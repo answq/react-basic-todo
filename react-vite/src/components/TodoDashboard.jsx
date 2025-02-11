@@ -1,5 +1,3 @@
-import React from "react";
-import TodoDashboard from "./TodoDashboard";
 import styled from "styled-components";
 
 const TodoDashboard = () => {
@@ -37,20 +35,19 @@ const TodoDashboardSection = styled.section`
 `;
 
 const TodoDashboardHeader = styled.h2`
-    font-size: 1.5rem;
-    font-weight: bold;
-`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
 
 const TodoDashboardCardList = styled.ul`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
-`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;
 
 const TodoDashboardCard = styled.li`
-    display: flex;
-    flex-direction: column;
-    
-`
+  display: flex;
+  flex-direction: column;
+`;
 export default TodoDashboard;
