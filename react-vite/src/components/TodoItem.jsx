@@ -1,24 +1,22 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoContext } from "../context/TodoContext";
+import { Link } from "react-router";
 
-const TodoItem = ({
-  completed,
-  text,
-  id
-}) => {
-  const {handleToggleCompleted, handleDelete} = useContext(TodoContext);
+const TodoItem = ({ completed, text, id }) => {
+  const { handleToggleCompleted, handleDelete } = useContext(TodoContext);
   return (
     <TodoItemWrapper>
-      <TodoItemText $completed={completed}>{text}</TodoItemText>
+      <TodoItemLink to={`/todos/${id}`} $completed={completed}>
+        {text}
+      </TodoItemLink>
       <TodoItemActions>
         <ActionButton onClick={() => handleToggleCompleted(id)}>
           {completed ? "취소하기" : "완료하기"}
         </ActionButton>
         <ActionButton onClick={() => handleDelete(id)}>삭제하기</ActionButton>
-    </TodoItemActions>
+      </TodoItemActions>
     </TodoItemWrapper>
-    
   );
 };
 
@@ -33,23 +31,26 @@ const TodoItemWrapper = styled.li`
   align-items: center;
 `;
 
-const TodoItemText = styled.p`
-  text-decoration: ${({ $completed }) => ($completed ? "line-through" : "none")};
+const TodoItemLink = styled(Link)`
+  text-decoration: ${({ $completed }) =>
+    $completed ? "line-through" : "none"};
 `;
 
 const TodoItemActions = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-`
+`;
 
-const ActionButton = styled.button`
-  background-color: ${({$bgColoer = "#e6582b"}) = $bgColoer};
+export const ActionButton = styled.button`
+  background-color: ${({ $bgColoer = "#e6582b" }) => $bgColoer};
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  &:hover {opacity: 0.8;}
-`
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 export default TodoItem;
