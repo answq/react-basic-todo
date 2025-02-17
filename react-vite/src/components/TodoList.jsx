@@ -2,9 +2,18 @@ import { useContext } from "react";
 import TodoItem from "./TodoItem";
 import styled from "styled-components";
 import { TodoContext } from "../context/TodoContext";
+import { useParams, useSearchParams } from 'react-router';
 
 const TodoList = () => {
   const { todos } = useContext(TodoContext);
+  const [searchParams] useSearchParams();
+  
+  const selectedFilter = searchParams.get("filter");
+  const getFilteredTodos = (selectedFilter) => {
+    if(selectedFilter ==="completed") {
+      return todos.filter((todo) => !todo.completed);
+    }
+  }
   return (
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
