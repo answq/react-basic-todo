@@ -1,44 +1,61 @@
+import { FileCheck, LaptopMinimal, Video } from "lucide-react";
 import { useContext } from "react";
 import styled from "styled-components";
-import { TodoContext } from "../context/TodoContext";
+import { TodoContext } from "../../context/TodoContext";
 import { Link, useSearchParams } from "react-router";
 
 const TodoDashboard = () => {
-  const { todos } = useContext(TodoContext);
+  const { getFilteredTodos } = useContext(TodoContext);
   const [searchParams] = useSearchParams();
+  const selectedFilter = searchParams.get("filter");
 
-  const all = todos.length;
-  const completed = todos.filter((todo) => todo.completed).length;
+  const all = getFilteredTodos().length;
+  const completed = getFilteredTodos("completed").length;
   const pending = all - completed;
 
-  const selectedFilter = searchParams.get("filter");
   return (
     <TodoDashboardSection>
       <TodoDashboardHeader>Quick Access</TodoDashboardHeader>
+
       <TodoDashboardCardList>
-        <li>
+        <TodoDashboardCardWrapper $flex={2}>
           <TodoDashboardCard to="/" $selected={!selectedFilter}>
-            <div>icon</div>
-            <p>16 All Tasks</p>
+            <div>
+              <FileCheck />
+            </div>
+            <TodoDashboardCardContent>
+              {all} <br /> <span>All Tasks</span>
+            </TodoDashboardCardContent>
           </TodoDashboardCard>
-        </li>
-        <li>
-          <TodoDashboardCard to="?filter=completed" $bgColor="#582be6"
-          $selected={selectedFilter ==="completed"}>
-            <div>icon</div>
-            <p>5 Completed Tasks</p>
+        </TodoDashboardCardWrapper>
+        <TodoDashboardCardWrapper>
+          <TodoDashboardCard
+            to="?filter=completed"
+            $bgColor="#582be6"
+            $selected={selectedFilter === "completed"}
+          >
+            <div>
+              <LaptopMinimal />
+            </div>
+            <TodoDashboardCardContent>
+              {completed} <br /> <span>Completed Tasks</span>
+            </TodoDashboardCardContent>
           </TodoDashboardCard>
-        </li>
-        <li>
+        </TodoDashboardCardWrapper>
+        <TodoDashboardCardWrapper>
           <TodoDashboardCard
             to="?filter=pending"
             $bgColor="#242424"
             $selected={selectedFilter === "pending"}
           >
-            <div>icon</div>
-            <p>11 Todo Tasks</p>
+            <div>
+              <Video />
+            </div>
+            <TodoDashboardCardContent>
+              {pending} <br /> <span>Pending Tasks</span>
+            </TodoDashboardCardContent>
           </TodoDashboardCard>
-        </li>
+        </TodoDashboardCardWrapper>
       </TodoDashboardCardList>
     </TodoDashboardSection>
   );
@@ -62,9 +79,32 @@ const TodoDashboardCardList = styled.ul`
   gap: 1rem;
 `;
 
+const TodoDashboardCardWrapper = styled.li`
+  flex: ${({ $flex = 1 }) => $flex};
+`;
+
 const TodoDashboardCard = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 184px;
+  background-color: ${({ $bgColor = "#e6582b" }) => $bgColor};
+  justify-content: space-between;
+  color: white;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-decoration: ${({ $selected }) => ($selected ? "underline" : "none")};
 `;
+
+const TodoDashboardCardContent = styled.p`
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  span {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+`;
+
 export default TodoDashboard;

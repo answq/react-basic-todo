@@ -1,35 +1,33 @@
-import { useParams } from "react-router";
-import { SAMPLE_TODOS } from "../constants/sample-todos";
-import TodoItem from "../components/TodoItem";
-import { ActionButton } from "../components/TodoItem";
-import { Link } from "react-router";
-import styled from "styled-components";
 import { useContext } from "react";
+import { Link, useParams } from "react-router";
+import styled from "styled-components";
+import TodoItem, { ActionButton } from "../components/todo/TodoItem";
 import { TodoContext } from "../context/TodoContext";
 
 const TodoDetailPage = () => {
-  const {todos} = useContext(TodoContext);
+  const { todos } = useContext(TodoContext);
   const { id } = useParams();
-  const TargetTodoItem = todos.find((todo) => {
-    todo.id === id;
-  });
+
+  const targetTodoItem = todos.find((todo) => todo.id === id);
+
   return (
     <DetailPageWrapper>
+      {targetTodoItem ? (
+        <TodoItem
+          id={targetTodoItem.id}
+          text={targetTodoItem.text}
+          completed={targetTodoItem.completed}
+        />
+      ) : (
+        <p>해당하는 데이터를 찾을 수 없습니다.</p>
+      )}
 
-      {TargetTodoItem ? (<TodoItem
-        id={TargetTodoItem.id}
-        text={TargetTodoItem.text}
-        completed={TargetTodoItem.completed}
-      />) : (<p>해당하는 데이터를 찾을 수 없습니다.</p>)}
-      
       <BackLink to="/">
         <ActionButton $bgColor="#242424">돌아가기</ActionButton>
       </BackLink>
     </DetailPageWrapper>
   );
 };
-
-export default TodoDetailPage;
 
 const DetailPageWrapper = styled.section`
   display: flex;
@@ -39,7 +37,10 @@ const DetailPageWrapper = styled.section`
 
 const BackLink = styled(Link)`
   flex: 1;
+
   button {
     width: 100%;
   }
 `;
+
+export default TodoDetailPage;
