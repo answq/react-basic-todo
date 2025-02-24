@@ -5,8 +5,8 @@ import { todoClient } from "../../lib/todoClient";
 const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
 
-  const getTodos = async () => {
-    const { data } = await todoClient.get("/");
+  const getTodoItem = async (id) => {
+    const { data } = await todoClient.get(`/${id}`);
     setTodos(data);
   };
 
@@ -15,7 +15,7 @@ const TodoProvider = ({ children }) => {
       text,
       completed: false,
     });
-    await getTodos();
+    await getTodoItem();
     return data;
   };
 
@@ -23,13 +23,13 @@ const TodoProvider = ({ children }) => {
     const { data } = await todoClient.patch(`/${id}`, {
       completed: !currentCompleted,
     });
-    await getTodos();
+    await getTodoItem();
     return data;
   };
 
   const deleteTodo = async (id) => {
     const { data } = await todoClient.delete(`/${id}`);
-    await getTodos();
+    await getTodoItem();
     return data;
   };
 
@@ -46,7 +46,7 @@ const TodoProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getTodos();
+    getTodoItem();
   }, []);
 
   return (
@@ -57,7 +57,7 @@ const TodoProvider = ({ children }) => {
         toggleTodoCompleted,
         deleteTodo,
         getFilteredTodos,
-        getTodos,
+        getTodoItem,
       }}
     >
       {children}
