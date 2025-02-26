@@ -1,24 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useDeleteTodoMutaion,
+  useToggleTodoMutaion,
+} from "../hooks/useTodoQuery";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router";
-import { deleteTodo, toggleTodoCompleted } from "../api/todo-api";
 
 const TodoItem = ({ completed, text, id }) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate: toggleTodoMutate } = useMutation({
-    mutationFn: ({ id, completed }) => toggleTodoCompleted(id, completed),
-    onSettled: () => {
-      return queryClient.invalidateQueries(["todos"]);
-    },
-  });
-
-  const { mutate: deleteTodoMutate } = useMutation({
-    mutationFn: deleteTodo,
-    onSettled: () => {
-      return queryClient.invalidateQueries(["todos"]);
-    },
-  });
+  const { mutate: toggleTodoMutate } = useToggleTodoMutaion();
+  const { mutate: deleteTodoMutate } = useDeleteTodoMutaion();
 
   const navigateAfterDelete = (id) => {
     deleteTodoMutate(id);
