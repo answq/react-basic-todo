@@ -7,8 +7,6 @@ import {
   getTodos,
   toggleTodoCompleted,
 } from "../api/todo-api";
-import { QueryClient } from "@tanstack/react-query";
-import { QueryClient } from "@tanstack/react-query";
 
 export const useTodoQuery = (filter) => {
   return useQuery({

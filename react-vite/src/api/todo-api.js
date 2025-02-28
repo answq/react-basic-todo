@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSearchParams } from "react-router";
 
 export const todoClient = axios.create({
   baseURL: "http;//localhost;3000/todos",
